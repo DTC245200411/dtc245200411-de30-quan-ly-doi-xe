@@ -1,0 +1,3 @@
+lam-fleet-20261024-163007-14807.dump: OK
+Restored archive: {"vehicles" : 8, "drivers" : 6, "trips" : 10, "maintenance" : 5, "fingerprint" : "ac7fdcd5ea89614274b887cccb7319ba"}
+PASS: restored business rows match current database exactly.

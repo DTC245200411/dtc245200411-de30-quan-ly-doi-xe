@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "mode": "monitoring",
+  "files": [
+    "10-prometheus.png",
+    "11-grafana-metrics.png",
+    "12-grafana-logs.png"
+  ],
+  "browserErrors": [],
+  "capturedAt": "2026-10-24T09:43:58.605Z"
+}

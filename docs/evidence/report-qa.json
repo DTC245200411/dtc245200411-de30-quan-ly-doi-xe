@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "pages": 18,
+  "reviewedPages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "tocVerified": true,
+  "coverIdentityVerified": true,
+  "titleBorderRemoved": true,
+  "layoutReview": "All pages inspected; no clipped text, overlapping elements, broken tables or missing Vietnamese glyphs.",
+  "docxSha256": "d338096c70b494991494b731dc217e9c9249b53e1cab4638fcd4b2b6a88acb57",
+  "pdfSha256": "c1316589fc35a711bcdf0b8a6ade50041ce98cc00c0b8a06bbc6a712f5a54c6c"
+}

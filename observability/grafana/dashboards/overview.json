@@ -48,7 +48,7 @@
         {
           "refId": "A",
           "expr": "sum(up)",
-          "legendFormat": ""
+          "legendFormat": "Targets đang hoạt động"
         }
       ],
       "options": {
@@ -59,7 +59,7 @@
         },
         "colorMode": "value",
         "graphMode": "area",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "wideLayout": true
       }
     },
@@ -96,7 +96,7 @@
         {
           "refId": "A",
           "expr": "sum(lam_fleet_vehicles_by_status)",
-          "legendFormat": ""
+          "legendFormat": "Tổng phương tiện"
         }
       ],
       "options": {
@@ -107,7 +107,7 @@
         },
         "colorMode": "value",
         "graphMode": "area",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "wideLayout": true
       }
     },
@@ -144,7 +144,7 @@
         {
           "refId": "A",
           "expr": "lam_fleet_trips_by_status{status=\"in_progress\"}",
-          "legendFormat": ""
+          "legendFormat": "Chuyến đang thực hiện"
         }
       ],
       "options": {
@@ -155,7 +155,7 @@
         },
         "colorMode": "value",
         "graphMode": "area",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "wideLayout": true
       }
     },
@@ -192,7 +192,7 @@
         {
           "refId": "A",
           "expr": "lam_fleet_maintenance_by_status{status=\"planned\"}",
-          "legendFormat": ""
+          "legendFormat": "Bảo dưỡng dự kiến"
         }
       ],
       "options": {
@@ -203,7 +203,7 @@
         },
         "colorMode": "value",
         "graphMode": "area",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "wideLayout": true
       }
     },
@@ -378,7 +378,7 @@
         {
           "refId": "A",
           "expr": "histogram_quantile(0.95,sum by(le)(rate(lam_http_request_duration_seconds_bucket[2m])))",
-          "legendFormat": ""
+          "legendFormat": "Độ trễ HTTP p95"
         }
       ],
       "options": {
@@ -665,6 +665,93 @@
         "tooltip": {
           "mode": "multi"
         }
+      }
+    },
+    {
+      "id": 20,
+      "title": "Log lỗi HTTP",
+      "type": "logs",
+      "datasource": {
+        "type": "loki",
+        "uid": "lam-loki"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 44,
+        "w": 24,
+        "h": 7
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"nginx\", project=\"de30lam\"} | json | status >= 400",
+          "queryType": "range"
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true
+      }
+    },
+    {
+      "id": 21,
+      "title": "Log điều phối và bảo dưỡng",
+      "type": "logs",
+      "datasource": {
+        "type": "loki",
+        "uid": "lam-loki"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 51,
+        "w": 24,
+        "h": 7
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"app\", project=\"de30lam\"} | json | event=~\"(trip|maintenance)_(scheduled|started|completed|cancelled)\"",
+          "queryType": "range"
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true
+      }
+    },
+    {
+      "id": 22,
+      "title": "Log lỗi PostgreSQL",
+      "type": "logs",
+      "datasource": {
+        "type": "loki",
+        "uid": "lam-loki"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 58,
+        "w": 24,
+        "h": 7
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"postgres\", project=\"de30lam\"} | json | error_severity=~\"ERROR|FATAL|PANIC\"",
+          "queryType": "range"
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true
       }
     }
   ]

@@ -1,12 +1,12 @@
 groups:
-  - name: hai-availability
+  - name: lam-availability
     rules:
       - alert: LamFleetTargetDown
         expr: up == 0
         for: 2m
         labels: {severity: warning}
         annotations: {summary: "Target {{ $labels.job }} unavailable for 2 minutes"}
-      - alert: HaiPostgresUnavailable
+      - alert: LamFleetPostgresUnavailable
         expr: pg_up == 0
         for: 1m
         labels: {severity: critical}

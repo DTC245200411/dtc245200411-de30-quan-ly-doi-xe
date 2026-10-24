@@ -1,0 +1,28 @@
+digraph Observability {
+graph [fontname="Arial", fontsize=15, bgcolor="white", pad="0.25", nodesep="0.35", ranksep="0.45"];
+node [fontname="Arial", fontsize=14, shape=box, style="rounded,filled", fillcolor="#f3f7f0", color="#91ad9c", fontcolor="#24483b", margin="0.18,0.13"];
+edge [fontname="Arial", fontsize=11, color="#577a67", arrowsize=0.7];
+graph [rankdir=TB];
+subgraph cluster_metrics {label="Số liệu vận hành";color="#b5caba";style="rounded";
+exporters [label="App /metrics
+Nginx và PostgreSQL exporter
+cAdvisor"];
+prometheus [label="Prometheus
+Thu thập mỗi 15 giây"];
+exporters -> prometheus [label="HTTP scrape"];
+}
+subgraph cluster_logs {label="Log tập trung";color="#c7cbb2";style="rounded";
+files [label="File JSON app và Nginx
+File JSON PostgreSQL"];
+promtail [label="Promtail
+Mount log chỉ đọc"];
+loki [label="Loki
+Lưu log 7 ngày"];
+files -> promtail [label="đọc file"];
+promtail -> loki [label="HTTP push"];
+}
+grafana [label="Grafana · localhost 3005
+Dashboard và Explore",fillcolor="#e4f0e4"];
+prometheus -> grafana [dir=back,label="PromQL"];
+loki -> grafana [dir=back,label="LogQL"];
+}

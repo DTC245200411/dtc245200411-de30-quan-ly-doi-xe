@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "query": "{job=\"nginx\", project=\"de30lam\"} | json | status >= 400",
+      "events": 20
+    },
+    {
+      "query": "{job=\"app\", project=\"de30lam\"} | json | event=~\"(trip|maintenance)_(scheduled|started|completed|cancelled)\"",
+      "events": 20
+    },
+    {
+      "query": "{job=\"postgres\", project=\"de30lam\"} | json | error_severity=~\"ERROR|FATAL|PANIC\"",
+      "events": 18
+    }
+  ]
+}

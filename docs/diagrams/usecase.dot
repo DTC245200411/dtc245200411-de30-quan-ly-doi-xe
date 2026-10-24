@@ -1,0 +1,18 @@
+graph UseCase {
+graph [fontname="Arial", fontsize=15, bgcolor="white", pad="0.25", nodesep="0.35", ranksep="0.45"];
+node [fontname="Arial", fontsize=14, shape=box, style="rounded,filled", fillcolor="#f3f7f0", color="#91ad9c", fontcolor="#24483b", margin="0.18,0.13"];
+edge [fontname="Arial", fontsize=11, color="#577a67", arrowsize=0.7];
+rankdir=LR;
+admin [label="«actor»
+Quản trị viên",fillcolor="#ffffff"];
+subgraph cluster_fleet {label="Lam Fleet";color="#91ad9c";style="rounded";
+node [shape=ellipse];
+login [label="Đăng nhập và đổi mật khẩu"];
+vehicles [label="Quản lý hồ sơ xe"];
+drivers [label="Quản lý hồ sơ tài xế"];
+trips [label="Điều phối chuyến đi"];
+maintenance [label="Quản lý bảo dưỡng"];
+history [label="Tra cứu và xem lịch sử"];
+}
+admin -- login;admin -- vehicles;admin -- drivers;admin -- trips;admin -- maintenance;admin -- history;
+}

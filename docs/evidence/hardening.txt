@@ -1,0 +1,2 @@
+PASS: app/nginx non-root, read-only, dropped capabilities, no-new-privileges; internal ports isolated; public ports bound to localhost; PostgreSQL network isolated; Promtail log mounts read-only; secret directory 0700; runtime files ignored by Git.
+Documented exceptions: storage init uses temporary root capabilities; PostgreSQL bootstrap starts root then switches user; cAdvisor is privileged and can access the host Docker socket.

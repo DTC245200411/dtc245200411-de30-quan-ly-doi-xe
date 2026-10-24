@@ -1,0 +1,9 @@
+/logs/app/*.log /logs/nginx/*.log /logs/postgres/*.json {
+    size 5M
+    rotate 3
+    missingok
+    notifempty
+    copytruncate
+    compress
+    su root root
+}

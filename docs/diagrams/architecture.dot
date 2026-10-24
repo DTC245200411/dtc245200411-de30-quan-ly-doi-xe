@@ -1,0 +1,23 @@
+digraph Architecture {
+graph [fontname="Arial", fontsize=15, bgcolor="white", pad="0.25", nodesep="0.35", ranksep="0.45"];
+node [fontname="Arial", fontsize=14, shape=box, style="rounded,filled", fillcolor="#f3f7f0", color="#91ad9c", fontcolor="#24483b", margin="0.18,0.13"];
+edge [fontname="Arial", fontsize=11, color="#577a67", arrowsize=0.7];
+browser [label="Chrome trên Windows"];
+subgraph cluster_wsl {labelloc=b;label="Ubuntu WSL2 và Docker Engine · project de30lam"; color="#bdcdbf"; style="rounded";
+nginx [label="Nginx
+localhost 8080"];
+app [label="Lam Fleet
+Express 5 và EJS
+app:3000"];
+postgres [label="PostgreSQL 17
+database fleet",shape=cylinder];
+pgadmin [label="pgAdmin
+localhost 8091"];
+{rank=same;app;pgadmin;}
+nginx -> app [label="HTTP nội bộ"];
+app -> postgres [label="SQL · fleet_app"];
+pgadmin -> postgres [label="SQL · fleet_migrate"];
+}
+browser -> nginx [label="HTTP và biểu mẫu"];
+browser -> pgadmin [label="HTTP · quản trị DB"];
+}

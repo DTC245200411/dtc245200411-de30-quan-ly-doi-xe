@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "mode": "app",
+  "files": [
+    "01-login.png",
+    "02-dashboard.png",
+    "03-vehicles.png",
+    "04-drivers.png",
+    "05-trips.png",
+    "06-maintenance.png",
+    "07-trip-form.png",
+    "08-maintenance-detail.png",
+    "09-mobile.png"
+  ],
+  "browserErrors": [],
+  "capturedAt": "2026-10-24T09:31:03.996Z"
+}
