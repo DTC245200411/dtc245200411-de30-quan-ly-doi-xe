@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "source": "fresh private GitHub clone",
+  "branch": "main",
+  "commit": "59e062ab9f3ef2a42e1633145ac6e4b5017dde52",
+  "project": "de30lamqa",
+  "webPort": 18080,
+  "pgadminPort": 18091,
+  "tests": 29,
+  "passedTests": 29,
+  "seedCounts": {
+    "vehicles": 8,
+    "drivers": 6,
+    "trips": 10,
+    "maintenance": 5
+  },
+  "seedIdempotent": true,
+  "adminPasswordPreserved": true,
+  "isolatedFromDemo": true
+}

@@ -1,0 +1,184 @@
+TAP version 13
+# Subtest: unauthenticated access redirects to login and invalid credentials fail
+ok 1 - unauthenticated access redirects to login and invalid credentials fail
+  ---
+  duration_ms: 583.155911
+  type: 'test'
+  ...
+# Subtest: CSRF protects state-changing requests
+ok 2 - CSRF protects state-changing requests
+  ---
+  duration_ms: 11.954721
+  type: 'test'
+  ...
+# Subtest: Nginx provides security headers and hides internal endpoints
+ok 3 - Nginx provides security headers and hides internal endpoints
+  ---
+  duration_ms: 30.419098
+  type: 'test'
+  ...
+# Subtest: session cookies are HttpOnly and SameSite
+ok 4 - session cookies are HttpOnly and SameSite
+  ---
+  duration_ms: 19.778229
+  type: 'test'
+  ...
+# Subtest: all screens render successfully including detail and edit forms
+ok 5 - all screens render successfully including detail and edit forms
+  ---
+  duration_ms: 183.782712
+  type: 'test'
+  ...
+# Subtest: duplicate vehicle code, plate and driver license are rejected
+ok 6 - duplicate vehicle code, plate and driver license are rejected
+  ---
+  duration_ms: 42.493417
+  type: 'test'
+  ...
+# Subtest: vehicle edits reject decreasing mileage and lost updates
+ok 7 - vehicle edits reject decreasing mileage and lost updates
+  ---
+  duration_ms: 38.681207
+  type: 'test'
+  ...
+# Subtest: SQL-like searches are parameterized and status filters validate
+ok 8 - SQL-like searches are parameterized and status filters validate
+  ---
+  duration_ms: 26.857547
+  type: 'test'
+  ...
+# Subtest: trip creation and planned edit roundtrip persist in PostgreSQL
+ok 9 - trip creation and planned edit roundtrip persist in PostgreSQL
+  ---
+  duration_ms: 60.728119
+  type: 'test'
+  ...
+# Subtest: overlapping vehicle, driver and maintenance reservations are rejected
+ok 10 - overlapping vehicle, driver and maintenance reservations are rejected
+  ---
+  duration_ms: 41.954239
+  type: 'test'
+  ...
+# Subtest: adjacent trips are allowed and cancellation releases their slot
+ok 11 - adjacent trips are allowed and cancellation releases their slot
+  ---
+  duration_ms: 61.029711
+  type: 'test'
+  ...
+# Subtest: retiring a vehicle or driver with open bookings is blocked
+ok 12 - retiring a vehicle or driver with open bookings is blocked
+  ---
+  duration_ms: 28.910792
+  type: 'test'
+  ...
+# Subtest: trip workflow checks mileage, transition order and preserves completed history
+ok 13 - trip workflow checks mileage, transition order and preserves completed history
+  ---
+  duration_ms: 107.959153
+  type: 'test'
+  ...
+# Subtest: maintenance creation blocks a trip in the same time window
+ok 14 - maintenance creation blocks a trip in the same time window
+  ---
+  duration_ms: 37.008683
+  type: 'test'
+  ...
+# Subtest: maintenance completion rejects negative or fractional cost and persists result
+ok 15 - maintenance completion rejects negative or fractional cost and persists result
+  ---
+  duration_ms: 53.620342
+  type: 'test'
+  ...
+# Subtest: a running job blocks starting an adjacent job even if its reserved time has passed
+ok 16 - a running job blocks starting an adjacent job even if its reserved time has passed
+  ---
+  duration_ms: 83.933718
+  type: 'test'
+  ...
+# Subtest: concurrent reservations sharing a vehicle produce exactly one winner
+ok 17 - concurrent reservations sharing a vehicle produce exactly one winner
+  ---
+  duration_ms: 51.789359
+  type: 'test'
+  ...
+# Subtest: concurrent reservations sharing only a driver produce exactly one winner
+ok 18 - concurrent reservations sharing only a driver produce exactly one winner
+  ---
+  duration_ms: 36.49695
+  type: 'test'
+  ...
+# Subtest: concurrent trip and maintenance cannot reserve the same vehicle
+ok 19 - concurrent trip and maintenance cannot reserve the same vehicle
+  ---
+  duration_ms: 31.491997
+  type: 'test'
+  ...
+# Subtest: concurrent start attempts on the same booking produce exactly one winner
+ok 20 - concurrent start attempts on the same booking produce exactly one winner
+  ---
+  duration_ms: 43.383567
+  type: 'test'
+  ...
+# Subtest: inactive vehicles and drivers cannot receive a new trip
+ok 21 - inactive vehicles and drivers cannot receive a new trip
+  ---
+  duration_ms: 66.40747
+  type: 'test'
+  ...
+# Subtest: invalid times, missing references and missing records fail without partial writes
+ok 22 - invalid times, missing references and missing records fail without partial writes
+  ---
+  duration_ms: 34.83028
+  type: 'test'
+  ...
+# Subtest: database application role has DML but no history delete or schema creation
+ok 23 - database application role has DML but no history delete or schema creation
+  ---
+  duration_ms: 2.97092
+  type: 'test'
+  ...
+# Subtest: changing a QA password invalidates all prior sessions
+ok 24 - changing a QA password invalidates all prior sessions
+  ---
+  duration_ms: 358.387919
+  type: 'test'
+  ...
+# Subtest: seed counts stay correct and no real student credentials are altered
+ok 25 - seed counts stay correct and no real student credentials are altered
+  ---
+  duration_ms: 5.274191
+  type: 'test'
+  ...
+# Subtest: Vietnamese local datetime is converted to the correct UTC instant
+ok 26 - Vietnamese local datetime is converted to the correct UTC instant
+  ---
+  duration_ms: 2.661981
+  type: 'test'
+  ...
+# Subtest: invalid calendar date, missing time zone shape and reversed interval are rejected
+ok 27 - invalid calendar date, missing time zone shape and reversed interval are rejected
+  ---
+  duration_ms: 1.727253
+  type: 'test'
+  ...
+# Subtest: integer validation rejects negative, fractional, infinite and out-of-range values
+ok 28 - integer validation rejects negative, fractional, infinite and out-of-range values
+  ---
+  duration_ms: 1.04228
+  type: 'test'
+  ...
+# Subtest: business codes normalize and reject executable or invalid input
+ok 29 - business codes normalize and reject executable or invalid input
+  ---
+  duration_ms: 0.737347
+  type: 'test'
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2460.179507
