@@ -121,4 +121,6 @@ Ngoại lệ: cAdvisor privileged để đọc host/Docker; storage-init root t�
 - [Kịch bản demo](docs/Kich_Ban_Demo.md), [sơ đồ DOT/SVG/PNG](docs/diagrams/README.md), [minh chứng](docs/evidence/README.md).
 - Ba mốc Git: ứng dụng/database/Nginx; Prometheus/Grafana; Loki/Promtail và bàn giao.
 
+Báo cáo Word/PDF gồm 20 trang, được biên soạn theo mẫu cung cấp và tập trung vào phát triển ứng dụng, thiết kế dữ liệu, xử lý đồng thời, phân quyền và quản trị dữ liệu. Bốn hình gồm kiến trúc, ERD, giao diện ứng dụng và transaction; kết quả giám sát/log được trình bày bằng phân tích và bảng. Mẫu gốc được giữ tại `docs/report-template.docx` để tái tạo định dạng.
+
 Tái tạo báo cáo: dùng Python và thư viện trong `docs/requirements-report.txt`, chạy `python scripts/build-report.py`; xuất PDF bằng Microsoft Word qua `scripts/export-report.ps1 -ProjectRoot <thu-muc-du-an>`. `scripts/render-report.py` dùng pipeline render_docx của Codex để tạo ảnh QA từ PDF đã xuất bằng Word khi Windows không có LibreOffice. Script chụp ảnh trình duyệt cần Playwright và Chrome, đọc secret trong bộ nhớ và không in mật khẩu.

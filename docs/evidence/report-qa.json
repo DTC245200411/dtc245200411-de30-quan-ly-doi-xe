@@ -1,6 +1,8 @@
 {
   "passed": true,
-  "pages": 18,
+  "revision": "Reference-based report focused on development and administration",
+  "verifiedAt": "2026-10-24T10:55:55.497266+00:00",
+  "pages": 20,
   "reviewedPages": [
     1,
     2,
@@ -19,12 +21,67 @@
     15,
     16,
     17,
-    18
+    18,
+    19,
+    20
   ],
   "tocVerified": true,
   "coverIdentityVerified": true,
-  "titleBorderRemoved": true,
-  "layoutReview": "All pages inspected; no clipped text, overlapping elements, broken tables or missing Vietnamese glyphs.",
-  "docxSha256": "d338096c70b494991494b731dc217e9c9249b53e1cab4638fcd4b2b6a88acb57",
-  "pdfSha256": "c1316589fc35a711bcdf0b8a6ade50041ce98cc00c0b8a06bbc6a712f5a54c6c"
+  "layoutReview": "All 20 final page PNGs inspected. Text, diagrams, tables and footers are complete and separated; targeted crops confirmed Vietnamese glyphs. No blank or overflow pages.",
+  "renderEngine": "Microsoft Word PDF export; Codex render_docx rasterization through supplied Word-PDF adapter, 140 DPI",
+  "templateSha256": "02c9189f6e9a969c92e76b214a255d133b5261f8e1f9b9198b68a3f6b6149a13",
+  "originalTemplateUnchanged": true,
+  "templateGeometryPreserved": true,
+  "pageSize": "Letter portrait",
+  "marginsCm": {
+    "left": 3.048,
+    "right": 2.54,
+    "top": 2.54,
+    "bottom": 2.54
+  },
+  "preservedPackageParts": [
+    "word/numbering.xml",
+    "word/theme/theme1.xml",
+    "word/fontTable.xml",
+    "word/webSettings.xml",
+    "word/stylesWithEffects.xml",
+    "_rels/.rels",
+    "customXml/itemProps1.xml",
+    "customXml/_rels/item1.xml.rels",
+    "customXml/item1.xml"
+  ],
+  "figures": [
+    "diagrams/architecture.png",
+    "diagrams/erd.png",
+    "evidence/02-dashboard.png",
+    "diagrams/workflow.png"
+  ],
+  "figureCount": 4,
+  "operationsDashboardScreenshots": 0,
+  "bodyBottomPointsByPage": [
+    518.8,
+    561.0,
+    663.1,
+    717.1,
+    681.5,
+    688.8,
+    685.5,
+    674.2,
+    673.8,
+    655.6,
+    626.5,
+    668.2,
+    667.1,
+    709.3,
+    578.1,
+    696.9,
+    652.7,
+    654.4,
+    678.3,
+    656.5
+  ],
+  "applicationOrInfrastructureChanged": false,
+  "runtimeTestEvidence": "Existing accepted 29/29 tests, fresh clone, metrics, LogQL and temporary restore results were checked against the report. Runtime tests were not rerun for this document-only revision.",
+  "docxSha256": "c174435bd0869a4fb0a787f74481404132ecc15273e391669b986237249d151f",
+  "pdfSha256": "b355a8e23384048949d59aa12c38958fb602a6aa02c7eae3352aaf84dfdfdd52"
 }
