@@ -1,0 +1,1 @@
+{"Servers":{"1":{"Name":"Lam Fleet PostgreSQL","Group":"Đề 30","Host":"postgres","Port":5432,"MaintenanceDB":"fleet","Username":"fleet_migrate","SSLMode":"prefer"}}}

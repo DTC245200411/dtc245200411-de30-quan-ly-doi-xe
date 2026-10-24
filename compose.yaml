@@ -1,0 +1,185 @@
+name: de30lam
+x-log: &log
+  driver: json-file
+  options: {max-size: "5m", max-file: "3"}
+x-env: &env
+  NODE_ENV: production
+  PORT: "3000"
+  DB_HOST: postgres
+  DB_NAME: fleet
+  DB_USER: fleet_app
+  DB_PASSWORD_FILE: /run/secrets/db_app_password
+  SESSION_SECRET_FILE: /run/secrets/session_secret
+  TZ: Asia/Ho_Chi_Minh
+services:
+  storage-init:
+    image: alpine:3.23.3
+    user: "0:0"
+    command: [sh, -ec, "mkdir -p /logs/app /logs/nginx /logs/postgres; for f in /logs/nginx/access.log /logs/nginx/error.log; do if [ -L \"$$f\" ]; then unlink \"$$f\"; fi; touch \"$$f\"; done; chown 1000:1000 /logs/app; chown 101:101 /logs/nginx /logs/nginx/*.log; chown 999:999 /logs/postgres; chmod 755 /logs/app /logs/nginx /logs/postgres; chmod 644 /logs/nginx/*.log"]
+    network_mode: none
+    volumes: [app_logs:/logs/app, nginx_logs:/logs/nginx, postgres_logs:/logs/postgres]
+    cap_drop: [ALL]
+    cap_add: [CHOWN, FOWNER, DAC_OVERRIDE]
+    security_opt: [no-new-privileges:true]
+    logging: *log
+  postgres:
+    image: postgres:17.11-bookworm
+    restart: unless-stopped
+    command: [postgres, -c, logging_collector=on, -c, log_destination=jsonlog, -c, log_directory=/var/log/postgresql, -c, log_filename=postgresql-%Y-%m-%d.log, -c, log_file_mode=0644, -c, log_rotation_age=1d, -c, log_rotation_size=10MB, -c, log_statement=none, -c, log_min_error_statement=panic, -c, timezone=Asia/Ho_Chi_Minh, -c, log_timezone=Asia/Ho_Chi_Minh]
+    depends_on:
+      storage-init: {condition: service_completed_successfully}
+    environment:
+      POSTGRES_USER: fleet_owner
+      POSTGRES_DB: fleet
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_owner_password
+      TZ: Asia/Ho_Chi_Minh
+    secrets: [db_owner_password, db_app_password, db_migrate_password, db_exporter_password]
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - postgres_logs:/var/log/postgresql
+      - ./infra/postgres/init.sh:/docker-entrypoint-initdb.d/10-roles.sh:ro
+    networks: [database]
+    healthcheck:
+      test: [CMD-SHELL, "PGPASSWORD=$$(cat /run/secrets/db_app_password) psql -h 127.0.0.1 -U fleet_app -d fleet -c 'SELECT 1' >/dev/null 2>&1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    security_opt: [no-new-privileges:true]
+    mem_limit: 512m
+    pids_limit: 200
+    logging: *log
+  migrate:
+    image: de30lam-app:1.0.0
+    command: [node, src/migrate.js]
+    environment:
+      <<: *env
+      DB_USER: fleet_migrate
+      DB_PASSWORD_FILE: /run/secrets/db_migrate_password
+      ADMIN_PASSWORD_FILE: /run/secrets/admin_password
+    secrets: [db_migrate_password, admin_password]
+    depends_on:
+      postgres: {condition: service_healthy}
+    networks: [database]
+    user: "1000:1000"
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    logging: *log
+    mem_limit: 256m
+    pids_limit: 60
+  app:
+    build: ./app
+    image: de30lam-app:1.0.0
+    restart: unless-stopped
+    environment: *env
+    secrets: [db_app_password, session_secret]
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+      storage-init: {condition: service_completed_successfully}
+    volumes: [app_logs:/var/log/app]
+    networks: [frontend, database, monitoring]
+    user: "1000:1000"
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:3000/readyz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    mem_limit: 256m
+    pids_limit: 100
+    logging: *log
+  nginx:
+    image: nginxinc/nginx-unprivileged:1.28.2-alpine
+    restart: unless-stopped
+    user: "101:101"
+    ports: ["127.0.0.1:${WEB_PORT:-8080}:8080"]
+    volumes:
+      - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - nginx_logs:/var/log/nginx
+    networks: [frontend, monitoring, edge]
+    depends_on:
+      app: {condition: service_healthy}
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    healthcheck:
+      test: [CMD-SHELL, "wget -qO- http://127.0.0.1:8080/healthz >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    mem_limit: 128m
+    pids_limit: 80
+    logging: *log
+  pgadmin:
+    image: dpage/pgadmin4:9.15
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@lam.edu.vn
+      PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/pgadmin_password
+      PGADMIN_CONFIG_SERVER_MODE: "True"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+      PGADMIN_CONFIG_UPGRADE_CHECK_ENABLED: "False"
+    ports: ["127.0.0.1:${PGADMIN_PORT:-8091}:80"]
+    secrets: [pgadmin_password]
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      - ./infra/pgadmin/servers.json:/pgadmin4/servers.json:ro
+    networks: [database, tools]
+    depends_on:
+      postgres: {condition: service_healthy}
+    security_opt: [no-new-privileges:true]
+    mem_limit: 384m
+    pids_limit: 150
+    healthcheck:
+      test: [CMD, /venv/bin/python3, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:80/misc/ping',timeout=4).read()"]
+      interval: 15s
+      timeout: 5s
+      retries: 8
+      start_period: 30s
+    logging: *log
+  tests:
+    profiles: [test]
+    image: de30lam-app:1.0.0
+    command: [node, --test, --test-reporter=tap, --test-concurrency=1, test/integration.test.js, test/validation.test.js]
+    environment:
+      <<: *env
+      BASE_URL: http://nginx:8080
+      DB_USER: fleet_migrate
+      DB_PASSWORD_FILE: /run/secrets/db_migrate_password
+    secrets: [db_migrate_password]
+    depends_on:
+      nginx: {condition: service_healthy}
+    networks: [frontend, database, monitoring]
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 256m
+    pids_limit: 80
+    logging: *log
+networks:
+  frontend: {internal: true}
+  database: {internal: true}
+  monitoring: {internal: true}
+  edge: {}
+  tools: {}
+volumes:
+  postgres_data: {}
+  pgadmin_data: {}
+  app_logs: {}
+  nginx_logs: {}
+  postgres_logs: {}
+secrets:
+  db_owner_password: {file: ./.local/secrets/db_owner_password}
+  db_app_password: {file: ./.local/secrets/db_app_password}
+  db_migrate_password: {file: ./.local/secrets/db_migrate_password}
+  db_exporter_password: {file: ./.local/secrets/db_exporter_password}
+  admin_password: {file: ./.local/secrets/admin_password}
+  pgadmin_password: {file: ./.local/secrets/pgadmin_password}
+  session_secret: {file: ./.local/secrets/session_secret}

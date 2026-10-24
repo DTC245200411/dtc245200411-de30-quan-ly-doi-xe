@@ -1,0 +1,1 @@
+<%- include('partials/header') %><section class="error-panel"><span class="aside-icon"><%- icon('info') %></span><h1><%= title %></h1><p role="alert"><%= message %></p><a class="button primary" href="<%= user?'/':'/auth/login' %>">Về <%= user?'tổng quan':'đăng nhập' %> <%- icon('arrow') %></a></section><%- include('partials/footer') %>
