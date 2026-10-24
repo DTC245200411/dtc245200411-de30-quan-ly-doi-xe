@@ -1,0 +1,977 @@
+{
+  "uid": "lam-fleet",
+  "title": "Lam Fleet | Thiết bị và vận hành",
+  "schemaVersion": 41,
+  "version": 1,
+  "editable": false,
+  "tags": [
+    "de16",
+    "hai",
+    "wsl2"
+  ],
+  "timezone": "Asia/Ho_Chi_Minh",
+  "refresh": "15s",
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Tổng thiết bị",
+      "type": "stat",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hai-prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "auto"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(hai_assets_by_status)",
+          "legendFormat": "",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Thiết bị đang bảo trì",
+      "type": "stat",
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hai-prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "auto"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(hai_assets_by_status{status=\"maintenance\"})",
+          "legendFormat": "",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Nginx exporter kết nối",
+      "type": "stat",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hai-prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "auto"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "nginx_up",
+          "legendFormat": "",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "PostgreSQL exporter kết nối",
+      "type": "stat",
+      "gridPos": {
+        "x": 18,
+        "y": 0,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hai-prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "auto"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "pg_up",
+          "legendFormat": "",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "CPU từng container (% một lõi)",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hai-prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (container_label_com_docker_compose_service)(rate(container_cpu_usage_seconds_total{container_label_com_docker_compose_project=\"de30lam\",image!=\"\"}[2m])) * 100",
+          "legendFormat": "{{container_label_com_docker_compose_service}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "RAM từng container (working set)",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 4,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hai-prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (container_label_com_docker_compose_service)(container_memory_working_set_bytes{container_label_com_docker_compose_project=\"de30lam\",image!=\"\"})",
+          "legendFormat": "{{container_label_com_docker_compose_service}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Lưu lượng mạng container",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 12,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hai-prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (container_label_com_docker_compose_service)(rate(container_network_receive_bytes_total{container_label_com_docker_compose_project=\"de30lam\",image!=\"\"}[2m]))",
+          "legendFormat": "Nhận {{container_label_com_docker_compose_service}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        },
+        {
+          "refId": "B",
+          "expr": "sum by (container_label_com_docker_compose_service)(rate(container_network_transmit_bytes_total{container_label_com_docker_compose_project=\"de30lam\",image!=\"\"}[2m]))",
+          "legendFormat": "Gửi {{container_label_com_docker_compose_service}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Yêu cầu HTTP ứng dụng / giây",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 12,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hai-prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (route)(rate(hai_http_requests_total{route!=\"/healthz\",route!=\"/readyz\"}[2m]))",
+          "legendFormat": "{{route}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Độ trễ HTTP p95",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 20,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hai-prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "histogram_quantile(0.95,sum by (le)(rate(hai_http_request_duration_seconds_bucket[2m])))",
+          "legendFormat": "p95",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "HTTP lỗi 4xx và 5xx / giây",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 20,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hai-prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (status_code)(rate(hai_http_requests_total{status_code=~\"4..|5..\"}[2m])) or vector(0)",
+          "legendFormat": "{{status_code}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Kết nối Nginx đang hoạt động",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 28,
+        "w": 8,
+        "h": 7
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hai-prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "nginx_connections_active",
+          "legendFormat": "Kết nối",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Kết nối database assets",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 8,
+        "y": 28,
+        "w": 8,
+        "h": 7
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hai-prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "pg_stat_database_numbackends{datname=\"assets\"}",
+          "legendFormat": "Kết nối",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Giao dịch PostgreSQL / giây",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 16,
+        "y": 28,
+        "w": 8,
+        "h": 7
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hai-prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ops",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "rate(pg_stat_database_xact_commit{datname=\"assets\"}[2m])",
+          "legendFormat": "Commit",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        },
+        {
+          "refId": "B",
+          "expr": "rate(pg_stat_database_xact_rollback{datname=\"assets\"}[2m])",
+          "legendFormat": "Rollback",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "Thiết bị theo trạng thái",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 35,
+        "w": 12,
+        "h": 7
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hai-prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "hai_assets_by_status",
+          "legendFormat": "{{status}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "Thao tác bảo trì thành công từ lúc app chạy",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 35,
+        "w": 12,
+        "h": 7
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hai-prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (action)(hai_maintenance_actions_total) or vector(0)",
+          "legendFormat": "{{action}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hai-prometheus"
+          },
+          "range": true
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "title": "HTTP lỗi từ Nginx",
+      "type": "logs",
+      "gridPos": {
+        "x": 0,
+        "y": 42,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "hai-loki"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"nginx\", project=\"de30lam\"} | json | status >= 400",
+          "datasource": {
+            "type": "loki",
+            "uid": "hai-loki"
+          }
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "prettifyLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 17,
+      "title": "Vòng đời bảo trì",
+      "type": "logs",
+      "gridPos": {
+        "x": 12,
+        "y": 42,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "hai-loki"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"app\", project=\"de30lam\"} | json | event=~\"maintenance_(scheduled|started|completed|cancelled)\"",
+          "datasource": {
+            "type": "loki",
+            "uid": "hai-loki"
+          }
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "prettifyLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 18,
+      "title": "Cảnh báo và lỗi ứng dụng",
+      "type": "logs",
+      "gridPos": {
+        "x": 0,
+        "y": 50,
+        "w": 24,
+        "h": 8
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "hai-loki"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"app\", project=\"de30lam\"} | json | level=~\"warn|error\"",
+          "datasource": {
+            "type": "loki",
+            "uid": "hai-loki"
+          }
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "prettifyLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
+  "links": []
+}

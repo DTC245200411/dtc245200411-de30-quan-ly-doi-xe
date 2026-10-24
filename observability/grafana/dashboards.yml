@@ -1,0 +1,9 @@
+apiVersion: 1
+providers:
+  - name: Lam Fleet
+    orgId: 1
+    folder: Đề 30 Nguyễn Thị Lam
+    type: file
+    disableDeletion: true
+    updateIntervalSeconds: 15
+    options: {path: /var/lib/grafana/dashboards}

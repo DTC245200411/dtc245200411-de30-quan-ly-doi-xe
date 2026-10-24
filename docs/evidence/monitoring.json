@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "targets": [
+    {
+      "job": "cadvisor",
+      "health": "up"
+    },
+    {
+      "job": "lam-fleet",
+      "health": "up"
+    },
+    {
+      "job": "nginx",
+      "health": "up"
+    },
+    {
+      "job": "postgres",
+      "health": "up"
+    },
+    {
+      "job": "prometheus",
+      "health": "up"
+    }
+  ],
+  "services": {
+    "app": {
+      "ram_bytes": 30445568,
+      "cpu_cores": 0.0356024319045719
+    },
+    "nginx": {
+      "ram_bytes": 8835072,
+      "cpu_cores": 0.002417962021704902
+    },
+    "postgres": {
+      "ram_bytes": 55541760,
+      "cpu_cores": 0.017919351134426862
+    }
+  },
+  "vehicles": 8,
+  "grafana": "healthy"
+}
